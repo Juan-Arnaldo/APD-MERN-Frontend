@@ -11,49 +11,79 @@ const Register = () => {
     repPass: "",
   });
 
-  const [alert, setAlert]= useState({
-    
-  })
+  const [alert, setAlert] = useState({});
 
   const validation = () => {
-
     const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 
-    if ([user.name, user.email, user.phone, user.pass, user.repPass].includes("")) {
-      setAlert({msg: "Campos Vacios", error: true});
-      return;
+    if ([user.name, user.email, user.pass, user.repPass].includes("")) {
+      setAlert({ msg: "Campos Vacios", error: true });
+      return false;
     }
 
-    if(!regex.test(user.email)){
-      setAlert({msg: 'Invalido el formato del email', error: true})
-      return;
+    if (!regex.test(user.email)) {
+      setAlert({ msg: "Invalido el formato del email", error: true });
+      return false;
     }
 
-    if(user.pass !== user.repPass){
-      setAlert({msg: 'son diferentes las pass', error: true});
-      return;
+    if (user.pass !== user.repPass) {
+      setAlert({ msg: "son diferentes las pass", error: true });
+      return false;
     }
 
-    if(user.pass.length < 8){
-      setAlert({msg: 'El pass es demasiado corto', error: true});
-      return;
+    if (user.pass.length < 8) {
+      setAlert({ msg: "El pass es demasiado corto", error: true });
+      return false;
     }
 
-    setAlert({})
-  }
+    setAlert({});
+    return true;
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    validation()
+    validation();
 
-    
+    if (validation()) {
+      const url = "http://localhost:4000/api/dentist";
+      const data = {
+        name: user.name,
+        email: user.email,
+        password: user.pass,
+      };
 
+      await fetch(url, {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw Error("El usuario ya esta registrado");
+          }
+          return res.json();
+        })
+        .then((res) => {
+          setAlert({
+            msg: res.msg,
+            error: false,
+          });
+        })
+        .catch((error) => {
+          setAlert({
+            msg: error.message,
+            error: true,
+          });
+        });
+    }
   };
 
   return (
     <>
-      <div className="shadow-lg p-3 rounded-xl bg-white">
+      <div className="shadow-lg shadow-gray-400 p-3 rounded-xl bg-white">
         <h1 className="font-black text-5xl">Register</h1>
 
         <Alert alert={alert} />
@@ -106,7 +136,6 @@ const Register = () => {
               onChange={(e) => setUser({ ...user, pass: e.target.value })}
             />
           </div>
-          {/* {alert.error && <Alert />} */}
 
           <div className="my-3">
             <label htmlFor="" className="block text-xl">
@@ -119,7 +148,6 @@ const Register = () => {
               onChange={(e) => setUser({ ...user, repPass: e.target.value })}
             />
           </div>
-          {/* {alert.error && <Alert />} */}
 
           <input
             type="submit"
