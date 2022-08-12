@@ -13,7 +13,7 @@ const ConfirmAccount = () => {
 
   useEffect(() => {
     const confirmAccount = async () => {
-      const url = `http://localhost:4000/api/dentist/confirm/${id}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/dentist/confirm/${id}`;
       
       await fetch(url)
       .then(res => res.json())

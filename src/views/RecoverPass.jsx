@@ -1,5 +1,56 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Alert from "../components/Alert";
+
 const RecoverPass = () => {
+  const [email, setEmail] = useState('')
+  const [alert, setAlert] = useState({})
+
+  const validation = () => {
+    const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+
+    if(email === '' || !regex.test(email)){
+      setAlert({msg: 'Ingrese un email correctamente', error: true})
+      return false
+    }
+
+    setAlert({})
+    return true;
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if(validation()){
+
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/dentist/recover-password`
+      const data = {
+        email: email
+      }
+
+      await fetch(url,{
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      .then(res => {
+        if(!res.ok){
+          throw Error('El usuario no existe');
+        }
+        return res.json();
+      })
+      .then(res => {
+        setAlert({msg: res.msg, error: false})
+      })
+      .catch((error) => {
+        setAlert({msg: error.message, error: true})
+      })
+    }
+
+  }
+
+
   return (
     <>
       <div className="shadow-lg p-3 rounded-xl bg-white h-min ">
@@ -7,7 +58,11 @@ const RecoverPass = () => {
           <h1> Recover Password</h1>
         </div>
 
-        <form action="">
+        <Alert 
+          alert={alert}  
+        />
+
+        <form action="" onSubmit={handleSubmit}>
           <div className="my-3">
             <label htmlFor="" className="block text-xl">
               Email
@@ -16,6 +71,8 @@ const RecoverPass = () => {
               type="text"
               placeholder="Email"
               className="border w-full p-1 mt-1 rounded-xl"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 

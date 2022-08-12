@@ -46,7 +46,7 @@ const Register = () => {
     validation();
 
     if (validation()) {
-      const url = "http://localhost:4000/api/dentist";
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/dentist`;
       const data = {
         name: user.name,
         email: user.email,
@@ -61,6 +61,7 @@ const Register = () => {
         },
       })
         .then((res) => {
+
           if (!res.ok) {
             throw Error("El usuario ya esta registrado");
           }
