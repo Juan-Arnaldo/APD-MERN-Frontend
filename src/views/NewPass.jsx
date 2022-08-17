@@ -37,7 +37,7 @@ const NewPass = () => {
 
       await fetch(url)
         .then((res) => {
-          console.log(res);
+
           if (!res.ok) {
             throw Error("Token no valido, error en el enlace");
           }
@@ -63,7 +63,6 @@ const NewPass = () => {
     }/api/dentist/recover-password/${token}`;
 
     if (validation()) {
-      console.log(token);
 
       const data = {
         pass: user.password,
@@ -135,8 +134,7 @@ const NewPass = () => {
         {login && (
           <nav className="mt-5 lg:flex lg:justify-center gap-4">
             <Link className="block text-center my-3" to="/">
-              <button
-                className="border rounded-xl 
+              <button className="border rounded-xl 
                         w-full py-2 px-12 mt-5 
                       bg-blue-600 hover:bg-blue-700 hover:cursor-pointer
                       text-white text-xl 
