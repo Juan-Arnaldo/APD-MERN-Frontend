@@ -1,9 +1,10 @@
 import { useEffect, useState, createContext } from "react";
-
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+
   const [auth, setAuth] = useState({});
+  console.log(auth);
 
   useEffect(() => {
     const authUser = async () => {
@@ -23,6 +24,8 @@ const AuthProvider = ({ children }) => {
       .then(res => res.json())
       .then(res => {
         setAuth(res);
+        console.log(res); 
+        console.log(auth)
       })
       .catch(err => {
         console.log(err);
@@ -32,10 +35,16 @@ const AuthProvider = ({ children }) => {
     }
 
     authUser()
-  })
+  }, [])
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setAuth({})
+  }
+
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, logOut }}>
       {children}
     </AuthContext.Provider>
   );

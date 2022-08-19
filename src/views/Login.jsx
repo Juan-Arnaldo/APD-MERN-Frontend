@@ -11,6 +11,7 @@ const login = () => {
     password: ''
   })
 
+  const {setAuth} = useAuth();
   const navigation = useNavigate();
 
   const validation = () => {
@@ -58,7 +59,10 @@ const login = () => {
       })
       .then(res => {
         localStorage.setItem('token', res.token);
+        setAuth(res)
+
         setAlert({msg: res.msg, error: false});
+
         navigation('/admin');
       })
       .catch(err => {
