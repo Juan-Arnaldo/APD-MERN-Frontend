@@ -1,10 +1,19 @@
+import NewAppointmentForm from "../components/NewAppointmentForm";
+import NewPatientForm from "../components/NewPatientForm";
 
 const ManagePatients = () => {
   return (
     <>
-        <h1>Hola Admin</h1>
-    </>
-  )
-}
 
-export default ManagePatients
+      <div className="flex flex-row justify-around text-center mb-10 h-full">
+
+      <NewAppointmentForm />
+        
+      <NewPatientForm />
+
+      </div>
+    </>
+  );
+};
+
+export default ManagePatients;

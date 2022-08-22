@@ -8,6 +8,7 @@ import RecoverPass from './views/RecoverPass';
 import ConfirmAccount from './views/ConfirmAccount';
 import NewPass from './views/NewPass';
 import ManagePatients from './views/ManagePatients';
+import Patients from './views/Patients';
 
 import {AuthProvider} from './context/AuthProvider'
 
@@ -28,6 +29,7 @@ function App() {
 
           <Route path='/admin' element={<AuthLayoutPrivate />}>
             <Route index element={<ManagePatients />} />
+            <Route path='/admin/patients' element={<Patients />} />
             
 
           </Route>

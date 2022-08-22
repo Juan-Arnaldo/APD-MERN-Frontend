@@ -4,21 +4,29 @@ import Header from "../components/Header";
 import useAuth from "../hooks/useAuth";
 
 const AuthLayoutPrivate = () => {
-  const { auth } = useAuth();
-  
-  console.log(auth);
+  const { auth, token } = useAuth();
 
   return (
     <>
-      <Header />
-      {auth._id ? (
-        <main className="container mx-auto mt-10">
-          <Outlet />
-        </main>
-      ) : (
-        <Navigate to="/" />
-      )}
-      <Footer />
+      <div className="container flex flex-col justify-between max-w-full min-h-screen">
+        <div>
+          <Header />
+        </div>
+
+        <div>
+          {auth && token ? (
+            <main className="container mx-auto">
+              <Outlet />
+            </main>
+          ) : (
+            <Navigate to="/" />
+          )}
+        </div>
+
+        <div className="2xl:mb-10">
+          <Footer />
+        </div>
+      </div>
     </>
   );
 };

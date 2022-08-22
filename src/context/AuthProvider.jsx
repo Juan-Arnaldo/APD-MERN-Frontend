@@ -2,51 +2,47 @@ import { useEffect, useState, createContext } from "react";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
   const [auth, setAuth] = useState({});
-  console.log(auth);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const authUser = async () => {
-      const token = localStorage.getItem('token');
+      
+      if (!token) return;
 
-      if(!token) return
-
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/dentist/profile`
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/dentist/profile`;
 
       await fetch(url, {
-        method: 'get',
+        method: "get",
         headers: {
-          'Content-Type': 'application/app',
-          authorization: `Bearer ${token}`
-        }
+          "Content-Type": "application/app",
+          authorization: `Bearer ${token}`,
+        },
       })
-      .then(res => res.json())
-      .then(res => {
-        setAuth(res);
-        console.log(res); 
-        console.log(auth)
-      })
-      .catch(err => {
-        console.log(err);
-        setAuth({})
-      })
-      
-    }
+        .then((res) => res.json())
+        .then((res) => {
+          setAuth(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          setAuth({});
+        });
+    };
 
-    authUser()
-  }, [])
+    authUser();
+  }, []);
 
   const logOut = () => {
-    localStorage.removeItem('token');
-    setAuth({})
-  }
-
+    localStorage.removeItem("token");
+    setAuth(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, logOut }}>
-      {children}
-    </AuthContext.Provider>
+    <>
+        <AuthContext.Provider value={{ auth, setAuth, logOut, token }}>
+          {children}
+        </AuthContext.Provider>
+    </>
   );
 };
 
