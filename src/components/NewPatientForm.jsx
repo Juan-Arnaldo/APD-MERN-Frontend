@@ -8,7 +8,10 @@ const NewPatientForm = () => {
     name: '',
     lastName: '',
     email: '',
+    phone: '',
   })
+
+//validar email y cel con la BD
 
   const validation = () => {
     const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -38,6 +41,7 @@ const NewPatientForm = () => {
         name: user.name,
         lastName: user.lastName,
         email: user.email,
+        phone: user.phone
       }
 
       await fetch(url, {
@@ -68,18 +72,16 @@ const NewPatientForm = () => {
     }
   }
 
-  const {msg} = alert;
-
   return (
     <>
-      <div className="shadow-lg p-5 rounded-xl bg-white h-4/5 w-2/6">
+      <div className="shadow-lg 2xl:p-5 mt-2 p-3 rounded-xl bg-white h-4/5 w-2/6">
         <h1 className="font-black text-3xl">New Patient</h1>
         <div className="my-3">
           <form onSubmit={handleSubmit}>
 
             <Alert alert={alert} />
 
-            <div className="p-3 my-3 shadow-lg bg-blue-400 rounded-xl">
+            <div className="input-wrapper">
               <label htmlFor="" className=" block text-xl font-bold">
                 Name
               </label>
@@ -90,8 +92,7 @@ const NewPatientForm = () => {
                 onChange={(e) => setUser({ ...user, name: e.target.value })}
               />
             </div>
-
-            <div className="p-3 my-3 shadow-lg bg-blue-400 rounded-xl">
+            <div className="input-wrapper">
               <label htmlFor="" className="block text-xl font-bold">
                 Last Name
               </label>
@@ -103,7 +104,7 @@ const NewPatientForm = () => {
               />
             </div>
 
-            <div className="p-3 my-3 shadow-lg bg-blue-400 rounded-xl">
+            <div className="input-wrapper">
               <label htmlFor="" className="block text-xl font-bold">
                 Email
               </label>
@@ -115,6 +116,18 @@ const NewPatientForm = () => {
               />
             </div>
 
+            <div className="input-wrapper">
+              <label htmlFor="" className="block text-xl font-bold">
+                Phone
+              </label>
+              <input
+                type="text"
+                placeholder="Phone"
+                className="border w-full p-1 mt-3 rounded-xl h-9"
+                onChange={(e) => setUser({ ...user, phone: e.target.value })}
+              />
+            </div>
+
             <input
               type="submit"
               value="Save Patient"
@@ -123,7 +136,7 @@ const NewPatientForm = () => {
           </form>
         </div>
 
-        <p className="mt-5">View all the Patients</p>
+        <p className="2xl:mt-5 mt-3">View all the Patients</p>
       </div>
     </>
   );

@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    tbody>tr:nth-child(odd){
+        @apply bg-gray-400
+    }
+}
+
+@layer components {
+
+    .input-wrapper {
+        @apply 2xl:p-3 p-1 my-3 shadow-lg bg-blue-400 rounded-xl
+    }
+}

@@ -12,26 +12,25 @@ const NewAppointmentForm = () => {
 
   return (
     <>
-      <div className="shadow-lg p-5 rounded-xl bg-white h-4/5 w-2/6 ">
+      <div className="shadow-lg 2xl:p-5 mt-2 p-3 rounded-xl bg-white h-4/5 w-2/6 ">
         <h1 className="font-black text-3xl">New appointment</h1>
         <div className=" my-3">
 
           <Alert alert={alert} />
 
           <form>
-            <div className="flex flex-row justify-around text-center gap-3 py-3">
-              <div className="p-3 shadow-lg bg-gray-500 rounded-xl w-1/2">
+              <div className="input-wrapper">
                 <label htmlFor="" className=" block text-xl font-bold">
                   Date
                 </label>
                 <input
                   type="date"
-                  className="border h-9 w-full p-1 mt-3 rounded-xl"
+                  className="border h-9 w-full p-1 mt-3 rounded-xl text-center"
                   onChange={(e) => setUser({ ...user, date: e.target.value })}
                 />
               </div>
 
-              <div className="p-3 shadow-lg bg-gray-500 rounded-xl w-1/2">
+              <div className="input-wrapper">
                 <label htmlFor="" className=" block text-xl font-bold">
                   Schedule
                 </label>
@@ -43,9 +42,8 @@ const NewAppointmentForm = () => {
                   }
                 />
               </div>
-            </div>
 
-            <div className="p-3 shadow-lg bg-gray-500 rounded-xl">
+            <div className="input-wrapper">
               <label htmlFor="" className="block text-xl font-bold">
                 Patient
               </label>
@@ -57,7 +55,7 @@ const NewAppointmentForm = () => {
               />
             </div>
 
-            <div className="p-3 my-3 shadow-lg bg-gray-500 rounded-xl">
+            <div className="input-wrapper">
               <label htmlFor="" className="block text-xl font-bold">
                 Comment
               </label>
@@ -72,12 +70,12 @@ const NewAppointmentForm = () => {
             <input
               type="submit"
               value="Save appointment"
-              className="border w-1/2 p-1 mt-3 rounded-xl bg-gray-500 font-bold text-xl cursor-pointer"
+              className="border w-1/2 p-1 mt-3 rounded-xl bg-blue-400 hover:bg-blue-600 font-bold text-xl cursor-pointer"
             />
           </form>
         </div>
 
-        <p className="mt-5">View all the Appointment</p>
+        <p className="2xl:mt-5 mt-3">View all the Appointment</p>
       </div>
     </>
   );
