@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 
-const NewPatientForm = () => {
+
+const NewPatientForm = ({setPatients, patients}) => {
 
   const [alert, setAlert] = useState({});
   const [user, setUser] = useState({
@@ -11,7 +13,7 @@ const NewPatientForm = () => {
     phone: '',
   })
 
-//validar email y cel con la BD
+  //validar email y cel con la BD
 
   const validation = () => {
     const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -44,6 +46,13 @@ const NewPatientForm = () => {
         phone: user.phone
       }
 
+      setUser({
+        name: '',
+        lastName: '',
+        email: '',
+        phone: ''
+      })
+
       await fetch(url, {
         method: 'post',
         body: JSON.stringify(data),
@@ -59,27 +68,26 @@ const NewPatientForm = () => {
 
         return res.json()
       })
-      .then((res) => {
-        console.log(res)
-        setAlert({msg: 'El paciente se cargo exitosamente', error: false});
+      .then(res => {
+        setPatients([...patients, res]);
       })
       .catch(err => {
         setAlert({msg: err.message, error:true});
       })
-
-
-      
     }
   }
 
   return (
     <>
-      <div className="shadow-lg 2xl:p-5 mt-2 p-3 rounded-xl bg-white h-4/5 w-2/6">
+      <div className="shadow-lg 2xl:p-5 mt-2 p-3 rounded-xl bg-white h-full w-3/4">
         <h1 className="font-black text-3xl">New Patient</h1>
         <div className="my-3">
+
+        <Alert alert={alert} />
+        
           <form onSubmit={handleSubmit}>
 
-            <Alert alert={alert} />
+
 
             <div className="input-wrapper">
               <label htmlFor="" className=" block text-xl font-bold">
@@ -89,6 +97,7 @@ const NewPatientForm = () => {
                 type="text"
                 placeholder="Name"
                 className="border w-full p-1 mt-3 rounded-xl h-9"
+                value={user.name}
                 onChange={(e) => setUser({ ...user, name: e.target.value })}
               />
             </div>
@@ -100,6 +109,7 @@ const NewPatientForm = () => {
                 type="text"
                 placeholder="Last Name"
                 className="border w-full p-1 mt-3 rounded-xl h-9"
+                value={user.lastName}
                 onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
             </div>
@@ -112,6 +122,7 @@ const NewPatientForm = () => {
                 type="text"
                 placeholder="Email"
                 className="border w-full p-1 mt-3 rounded-xl h-9"
+                value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </div>
@@ -124,6 +135,7 @@ const NewPatientForm = () => {
                 type="text"
                 placeholder="Phone"
                 className="border w-full p-1 mt-3 rounded-xl h-9"
+                value={user.phone}
                 onChange={(e) => setUser({ ...user, phone: e.target.value })}
               />
             </div>
@@ -135,8 +147,6 @@ const NewPatientForm = () => {
             />
           </form>
         </div>
-
-        <p className="2xl:mt-5 mt-3">View all the Patients</p>
       </div>
     </>
   );

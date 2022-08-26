@@ -7,9 +7,7 @@ const ManagePatients = () => {
 
       <div className="flex flex-row justify-around text-center mb-10 h-full">
 
-      <NewAppointmentForm />
-        
-      <NewPatientForm />
+        <h1>Proximamente</h1>
 
       </div>
     </>

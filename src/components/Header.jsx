@@ -12,7 +12,7 @@ const { logOut } = useAuth()
 
             <nav className='flex flex-col items-center lg:flex-row gap-4 mt-5 lg:mt-0'>
                 <Link to='/admin/patients' className=' text-m font-bold'>Patients</Link>
-                <Link to='/admin' className=' text-m font-bold'>appointments</Link>
+                <Link to='/admin/appointments' className=' text-m font-bold'>Appointments</Link>
                 <Link to='/admin' className=' text-m font-bold'>Profile</Link>
 
                 <button
